@@ -1,11 +1,11 @@
-EXECS=lab5
+EXECS=fox
 MPICC?=mpicc
 
-all: lab5
+all: fox
 
-ratetest: fox.c
+fox: fox.c
         ${MPICC} -o fox fox.c
 
 
 clean:
-        rm -f lab5
+        rm -f fox
