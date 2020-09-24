@@ -10,7 +10,7 @@
 #include<stdio.h>
 #include"mpi.h"
 
-#define N 9 /* dimension of the input matrix */
+#define N 14000 /* dimension of the input matrix */
 
 int matrixA[N][N];
 int matrixB[N][N];
@@ -196,8 +196,8 @@ Note: This initalization is deterministic & hence is done by every process in th
 	{
 		for(j=0;j<N;j++)
 		{
-			matrixA[i][j]=i+j;
-			matrixB[i][j]=i+j;
+			matrixA[i][j]=rand() % 10 + 1;
+			matrixB[i][j]=rand() % 10 + 1;
 		}
 	}
 }
