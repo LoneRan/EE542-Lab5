@@ -1,11 +1,11 @@
-EXECS=fox
+EXECS=fox 
 MPICC?=mpicc
 
-all: fox
+all: fox 
 
 fox: fox.c
-        ${MPICC} -o fox fox.c
+	${MPICC} -o fox fox.c
 
 
 clean:
-        rm -f fox
+	rm -f fox
