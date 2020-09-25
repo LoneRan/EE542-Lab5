@@ -200,25 +200,7 @@ Note: This initalization is deterministic & hence is done by every process in th
 			matrixB[i][j]=rand() % 10 + 1;
 		}
 	}
-	printf("matrix A:\n");
-	for(i=0;i<N;i++)
-	{
-		for(j=0;j<N;j++)
-		{
-			printf("%d ", matrixA[i][j]);
-		}
-		printf("\n");
-	}
 	
-	printf("matrix B:\n");
-	for(i=0;i<N;i++)
-	{
-		for(j=0;j<N;j++)
-		{
-			printf("%d ", matrixB[i][j]);
-		}
-		printf("\n");
-	}
 			
 	
 }
