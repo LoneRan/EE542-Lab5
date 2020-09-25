@@ -10,7 +10,7 @@
 #include<stdio.h>
 #include"mpi.h"
 
-#define N 4 /* dimension of the input matrix */
+#define N 14000 /* dimension of the input matrix */
 
 int matrixA[N][N];
 int matrixB[N][N];
