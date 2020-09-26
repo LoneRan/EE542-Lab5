@@ -5,8 +5,8 @@
 
 #define N 14000 /* dimension of the input matrix */
 
-int matrixA[N][N];
-int matrixB[N][N];
+double matrixA[N][N];
+double matrixB[N][N];
 
 typedef struct {
 	int p; /* number of processors */
@@ -66,13 +66,13 @@ void SetupGrid(GridInfo *grid)
 
 /* normal matrix multiplication stuff */
 
-void matmul(int **a, int **b, int **c, int size)
+void matmul(double **a, double **b, double **c, int size)
 {
 	int i,j,k;
        
-	int **temp = (int**) malloc(size*sizeof(int*));
+	double **temp = (double**) malloc(size*sizeof(double*));
 	for(i=0;i<size;i++)
-		*(temp+i)=(int*) malloc(size*sizeof(int));
+		*(temp+i)=(double*) malloc(size*sizeof(double));
 
 	for(i=0;i<size;i++)
 	{
@@ -90,7 +90,7 @@ void matmul(int **a, int **b, int **c, int size)
 			c[i][j]+=temp[i][j];
 	
 }
-void transfer_data_from_buff(int *buff,int **a,int buffsize, int row, int col){
+void transfer_data_from_buff(double *buff,double **a,int buffsize, int row, int col){
 	
   	if(buffsize!=row*col)
 	{
@@ -107,7 +107,7 @@ void transfer_data_from_buff(int *buff,int **a,int buffsize, int row, int col){
 	}
 }
 
-void transfer_data_to_buff(int *buff,int **a,int buffsize, int row, int col){
+void transfer_data_to_buff(double *buff,double **a,int buffsize, int row, int col){
 	
   	if(buffsize!=row*col)
 	{
@@ -124,10 +124,10 @@ void transfer_data_to_buff(int *buff,int **a,int buffsize, int row, int col){
 	}
 }
 
-void Fox(int n,GridInfo *grid,int **a, int **b, int **c)
+void Fox(int n,GridInfo *grid,double **a, double **b, double **c)
 {
-	int **tempa;
-	int *buff; /* buffer for Bcast & send_recv */
+	double **tempa;
+	double *buff; /* buffer for Bcast & send_recv */
 	int stage;
 	int root;
 	int submat_dim; /* = n/q */
@@ -139,11 +139,11 @@ void Fox(int n,GridInfo *grid,int **a, int **b, int **c)
 	submat_dim=n/grid->q;
 	
 	/* Initialize tempa */
-	tempa=(int**) malloc(submat_dim*sizeof(int*));
+	tempa=(double**) malloc(submat_dim*sizeof(double*));
 	for(i=0;i<submat_dim;i++)
-		*(tempa+i)=(int*) malloc(submat_dim*sizeof(int));
+		*(tempa+i)=(double*) malloc(submat_dim*sizeof(double));
 	/* initialize buffer */
-	buff=(int*)malloc(submat_dim*submat_dim*sizeof(int));
+	buff=(double*)malloc(submat_dim*submat_dim*sizeof(double));
 
         /* we are gonna shift the elements of matrix b upwards with the column fixed */
 	source = (grid->my_row+1) % grid->q; /* pick the emmediately lower element */
@@ -203,9 +203,9 @@ int main(int argc, char *argv[])
 {	
 	
 	int i,j,dim;
-	int **localA;
-	int **localB;
-	int **localC;
+	double **localA;
+	double **localB;
+	double **localC;
 	MPI_Init (&argc, &argv);
 	
 	GridInfo grid;
@@ -219,17 +219,17 @@ int main(int argc, char *argv[])
 	/* allocate space for the three matrices */		
 
 	
-	localA=(int**) malloc(dim*sizeof(int*));
+	localA=(double**) malloc(dim*sizeof(double*));
 
-	localB=(int**) malloc(dim*sizeof(int*));
+	localB=(double**) malloc(dim*sizeof(double*));
 	
-	localC=(int**) malloc(dim*sizeof(int*));
+	localC=(double**) malloc(dim*sizeof(double*));
 	
 	for(i=0;i<dim;i++)
 	{
-		*(localA+i)=(int*) malloc(dim*sizeof(int));
-		*(localB+i)=(int*) malloc(dim*sizeof(int));
-		*(localC+i)=(int*) malloc(dim*sizeof(int));
+		*(localA+i)=(double*) malloc(dim*sizeof(double));
+		*(localB+i)=(double*) malloc(dim*sizeof(double));
+		*(localC+i)=(double*) malloc(dim*sizeof(double));
 	}
 
 
@@ -260,7 +260,7 @@ int main(int argc, char *argv[])
 		for(j=0;j<dim;j++)
 		{
 			//printf("localC[%d][%d]=%d ", i,j,localC[i][j]);
-			printf("%d ", localC[i][j]);
+			printf("%.2f ", localC[i][j]);
 		}
 		printf("\n");
 	}
