@@ -3,7 +3,7 @@
 #include<stdio.h>
 #include"mpi.h"
 
-#define N 14000 /* dimension of the input matrix */
+#define N 4 /* dimension of the input matrix */
 
 double matrixA[N][N];
 double matrixB[N][N];
