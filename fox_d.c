@@ -22,6 +22,7 @@ typedef struct {
 
 int check(double matrixA[N][N], double matrixB[N][N], double matrixC[N][N]){
 	double r[N][1];
+	int i, j, k;
 	for (i = 0; i < N; i++)
     {
         r[i][0] = rand() % 2;
