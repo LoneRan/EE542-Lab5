@@ -10,11 +10,14 @@
 #include<stdio.h>
 #include"mpi.h"
 
-#define N 14000 /* dimension of the input matrix */
+#define N 4 /* dimension of the input matrix */
 
 int matrixA[N][N];
 int matrixB[N][N];
-
+int matrixC[N][N];
+int temp0[N][N];
+int temp1[N][N];
+int temp2[N][N];
 typedef struct {
 	int p; /* number of processors */
 	MPI_Comm comm; /* handle to global grid communicator */
@@ -270,6 +273,71 @@ int main(int argc, char *argv[])
 			printf("%d ", localC[i][j]);
 		}
 		printf("\n");
+	}
+	
+	for(i=base_row;i<base_row+dim;i++){
+		for(j=base_col;j<base_col+dim;j++)
+		{
+			matrixC[i][j] = localC[i-(base_row)][j-(base_col)];
+		}
+	}
+	if(grid.my_rank != 3)
+	{
+		MPI_Send(&matrixC[0][0], N*N, MPI_INT, 3, 0, MPI_COMM_WORLD);
+	}
+	if(grid.my_rank == 3)
+	{
+		MPI_Recv(&temp0[0][0], N*N, MPI_INT, 0, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
+		MPI_Recv(&temp1[0][0], N*N, MPI_INT, 1, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
+		MPI_Recv(&temp2[0][0], N*N, MPI_INT, 2, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
+		for(int i = 0; i < N;  i++){
+			for(int j = 0; j < N; j++){
+				matrixC[i][j] += temp0[i][j];	
+			}
+		}
+		for(int i = 0; i < N;  i++){
+			for(int j = 0; j < N; j++){
+				matrixC[i][j] += temp1[i][j];	
+			}
+		}
+		for(int i = 0; i < N;  i++){
+			for(int j = 0; j < N; j++){
+				matrixC[i][j] += temp2[i][j];	
+			}
+		}
+		printf("AAAAAAA\n");
+		for(i=0;i<N;i++)
+		{
+			for(j=0;j<N;j++)
+			{
+				//printf("localC[%d][%d]=%d ", i,j,localC[i][j]);
+				printf("%d ", matrixA[i][j]);
+			}
+			printf("\n");
+		}
+		printf("BBBBBBB\n");
+		for(i=0;i<N;i++)
+		{
+			for(j=0;j<N;j++)
+			{
+				//printf("localC[%d][%d]=%d ", i,j,localC[i][j]);
+				printf("%d ", matrixB[i][j]);
+			}
+			printf("\n");
+		}
+		for(i=0;i<N;i++)
+		{
+			for(j=0;j<N;j++)
+			{
+				//printf("localC[%d][%d]=%d ", i,j,localC[i][j]);
+				printf("%d ", matrixC[i][j]);
+			}
+			printf("\n");
+		}
+
+
+		if(check(matrixA,matrixB,matrixC)==1) printf("result is correct!\n");
+		else printf("result is wrong!\n");
 	}
 	MPI_Finalize ();
 	exit(0);
