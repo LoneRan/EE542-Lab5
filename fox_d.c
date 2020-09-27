@@ -328,6 +328,15 @@ int main(int argc, char *argv[])
 		}
 	}
 	
+	for(i=0;i<N;i++)
+	{
+		for(j=0;j<N;j++)
+		{
+			//printf("localC[%d][%d]=%d ", i,j,localC[i][j]);
+			printf("%.2f ", matrixC[i][j]);
+		}
+		printf("\n");
+	}
 	
 	
 	if(check(matrixA,matrixB,matrixC)==1) printf("result is correct!\n");
