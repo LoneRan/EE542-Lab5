@@ -328,12 +328,11 @@ int main(int argc, char *argv[])
 		}
 	}
 	
-	count++;
-	printf("count is %d\n", count);
-	if(count == 4){
-		if(check(matrixA,matrixB,matrixC)==1) printf("result is correct!\n");
-		else printf("result is wrong!\n");
-	}
+	
+	
+	if(check(matrixA,matrixB,matrixC)==1) printf("result is correct!\n");
+	else printf("result is wrong!\n");
+	
 		
 	MPI_Finalize ();
 	exit(0);
