@@ -364,7 +364,6 @@ int main(int argc, char *argv[])
 				matrixC[i][j] += temp2[i][j];	
 			}
 		}
-	}
 		
 	}
 	
