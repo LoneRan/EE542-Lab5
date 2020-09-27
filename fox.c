@@ -271,6 +271,8 @@ int main(int argc, char *argv[])
 	int **localA;
 	int **localB;
 	int **localC;
+	double t1, t2; 
+
 	MPI_Init (&argc, &argv);
 	
 	GridInfo grid;
@@ -300,7 +302,7 @@ int main(int argc, char *argv[])
 
 /* Compute local matrices - Ideally the master should do this & pass it onto all the slaves */
 /* At the same time initialize localC to all zeros */
-
+	t1 = MPI_Wtime(); 
 	int base_row=grid.my_row*dim;
 	int base_col=grid.my_col*dim;
 
@@ -329,7 +331,8 @@ int main(int argc, char *argv[])
 		}
 		printf("\n");
 	}
-	
+	t2 = MPI_Wtime(); 
+	printf( "Elapsed time is %f\n", t2 - t1 ); 
 	for(i=base_row;i<base_row+dim;i++){
 		for(j=base_col;j<base_col+dim;j++)
 		{
