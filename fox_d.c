@@ -7,7 +7,8 @@
 
 double matrixA[N][N];
 double matrixB[N][N];
-
+double matrixC[N][N];
+int count = 0;
 typedef struct {
 	int p; /* number of processors */
 	MPI_Comm comm; /* handle to global grid communicator */
@@ -19,6 +20,60 @@ typedef struct {
 	int my_rank; /* rank within the grid */
 }GridInfo;
 
+int check(double matrixA[N][N], double matrixB[N][N], double matrixC[N][N]){
+	double r[N][1];
+	for (i = 0; i < N; i++)
+    {
+        r[i][0] = rand() % 2;
+    }
+
+    double br[N][1];
+    for (i = 0; i < N; i++)
+    {
+        for (j = 0; j < 1; j++)
+            {
+                for (k = 0; k < N; k++)
+                    {
+                        br[i][j] = br[i][j] + b[i][k] * r[k][j];
+                    }
+            }
+    }
+    double cr[N][1];
+    for (i = 0; i < N; i++)
+    {
+        for (j = 0; j < 1; j++)
+            {
+                for (k = 0; k < N; k++)
+                    {
+                        cr[i][j] = cr[i][j] + c[i][k] * r[k][j];
+                    }
+            }
+    }
+    double abr[N][1];
+    for (i = 0; i < N; i++)
+    {
+        for (j = 0; j < 1; j++)
+            {
+                for (k = 0; k < N; k++)
+                    {
+                        abr[i][j] = abr[i][j] + a[i][k] * br[k][j];
+                    }
+            }
+    }
+    for (i = 0; i < N; i++)
+    {
+        abr[i][0] -= cr[i][0];
+    }
+    int flag = 1;
+    for (i = 0; i < N; i++)
+    {
+        if (abr[i][0] == 0)
+            continue;
+        else
+            flag = 0;
+    }
+    return flag;
+}
 
 void SetupGrid(GridInfo *grid)
 {
@@ -264,6 +319,21 @@ int main(int argc, char *argv[])
 		}
 		printf("\n");
 	}
+	
+	for(i=base_row;i<base_row+dim;i++){
+		for(j=base_col;j<base_col+dim;j++)
+		{
+			matrixC[i][j] = localC[i-(base_row)][j-(base_col)];
+		}
+	}
+	
+	count++;
+	printf("count is %d\n", count);
+	if(count == 4){
+		if(check(matrixA,matrixB,matrixC)==1) printf("result is correct!\n");
+		else printf("result is wrong!\n");
+	}
+		
 	MPI_Finalize ();
 	exit(0);
 
