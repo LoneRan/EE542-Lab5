@@ -35,7 +35,7 @@ int check(double matrixA[N][N], double matrixB[N][N], double matrixC[N][N]){
             {
                 for (k = 0; k < N; k++)
                     {
-                        br[i][j] = br[i][j] + b[i][k] * r[k][j];
+                        br[i][j] = br[i][j] + matrixB[i][k] * r[k][j];
                     }
             }
     }
@@ -46,7 +46,7 @@ int check(double matrixA[N][N], double matrixB[N][N], double matrixC[N][N]){
             {
                 for (k = 0; k < N; k++)
                     {
-                        cr[i][j] = cr[i][j] + c[i][k] * r[k][j];
+                        cr[i][j] = cr[i][j] + matrixC[i][k] * r[k][j];
                     }
             }
     }
@@ -57,7 +57,7 @@ int check(double matrixA[N][N], double matrixB[N][N], double matrixC[N][N]){
             {
                 for (k = 0; k < N; k++)
                     {
-                        abr[i][j] = abr[i][j] + a[i][k] * br[k][j];
+                        abr[i][j] = abr[i][j] + matrixA[i][k] * br[k][j];
                     }
             }
     }
