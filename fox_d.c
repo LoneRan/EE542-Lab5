@@ -346,9 +346,9 @@ int main(int argc, char *argv[])
 	}
 	if(grid.my_rank == 3)
 	{
-		MPI_Recv(&temp0([0][0]), N*N, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
-		MPI_Recv(&temp1([0][0]), N*N, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
-		MPI_Recv(&temp2([0][0]), N*N, MPI_DOUBLE, 2, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
+		MPI_Recv(&temp0[0][0], N*N, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
+		MPI_Recv(&temp1[0][0], N*N, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
+		MPI_Recv(&temp2[0][0], N*N, MPI_DOUBLE, 2, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
 		for(int i = 0; i < N;  i++){
 			for(int j = 0; j < N; j++){
 				matrixC[i][j] += temp0[i][j];	
