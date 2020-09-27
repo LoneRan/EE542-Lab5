@@ -29,15 +29,15 @@ typedef struct {
 	int my_rank; /* rank within the grid */
 }GridInfo;
 
-int check(double matrixA[N][N], double matrixB[N][N], double matrixC[N][N]){
-	double r[N][1];
+int check(int matrixA[N][N], int matrixB[N][N], int matrixC[N][N]){
+	int r[N][1];
 	int i, j, k;
 	for (i = 0; i < N; i++)
     {
         r[i][0] = rand() % 2;
     }
 
-    double br[N][1];
+    int br[N][1];
     for (i = 0; i < N; i++)
     {
         for (j = 0; j < 1; j++)
@@ -48,7 +48,7 @@ int check(double matrixA[N][N], double matrixB[N][N], double matrixC[N][N]){
                     }
             }
     }
-    double cr[N][1];
+    int cr[N][1];
     for (i = 0; i < N; i++)
     {
         for (j = 0; j < 1; j++)
@@ -59,7 +59,7 @@ int check(double matrixA[N][N], double matrixB[N][N], double matrixC[N][N]){
                     }
             }
     }
-    double abr[N][1];
+    int abr[N][1];
     for (i = 0; i < N; i++)
     {
         for (j = 0; j < 1; j++)
