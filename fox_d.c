@@ -8,6 +8,9 @@
 double matrixA[N][N];
 double matrixB[N][N];
 double matrixC[N][N];
+double temp0[N][N];
+double temp1[N][N];
+double temp2[N][N];
 int count = 0;
 typedef struct {
 	int p; /* number of processors */
@@ -19,6 +22,15 @@ typedef struct {
 	int my_col; /* column position of a procesor in a grid */
 	int my_rank; /* rank within the grid */
 }GridInfo;
+
+double[][] addMatrix(double m1[N][N], m2[N][N]){
+	for(int i = 0; i < N;  i++){
+		for(int j = 0; j < N; j++){
+			m1[i][j] += m2[i][j];	
+		}
+	}
+	return m1;
+}
 
 int check(double matrixA[N][N], double matrixB[N][N], double matrixC[N][N]){
 	double r[N][1];
@@ -321,11 +333,26 @@ int main(int argc, char *argv[])
 		printf("\n");
 	}
 	
+	
 	for(i=base_row;i<base_row+dim;i++){
 		for(j=base_col;j<base_col+dim;j++)
 		{
 			matrixC[i][j] = localC[i-(base_row)][j-(base_col)];
 		}
+	}
+	if(grid.my_rank != 3)
+	{
+		MPI_Send(&matrixC([0][0]), N*N, MPI_INT, 3, tag, MPI_COMM_WORLD);
+	}
+	if(grid.my_rank == 3)
+	{
+		MPI_Recv(&temp0([0][0]), N*N, MPI_INT, 0, tag, MPI_COMM_WORLD);
+		MPI_Recv(&temp1([0][0]), N*N, MPI_INT, 1, tag, MPI_COMM_WORLD);
+		MPI_Recv(&temp2([0][0]), N*N, MPI_INT, 2, tag, MPI_COMM_WORLD);
+		matrixC = addMatrix(matrixC, temp0);
+		matrixC = addMatrix(matrixC, temp1);
+		matrixC = addMatrix(matrixC, temp2);
+		
 	}
 	
 	for(i=0;i<N;i++)
