@@ -23,14 +23,14 @@ typedef struct {
 	int my_rank; /* rank within the grid */
 }GridInfo;
 
-double[N][N] addMatrix(double m1[N][N], m2[N][N]){
-	for(int i = 0; i < N;  i++){
-		for(int j = 0; j < N; j++){
-			m1[i][j] += m2[i][j];	
-		}
-	}
-	return m1;
-}
+// double[N][N] addMatrix(double m1[N][N], m2[N][N]){
+// 	for(int i = 0; i < N;  i++){
+// 		for(int j = 0; j < N; j++){
+// 			m1[i][j] += m2[i][j];	
+// 		}
+// 	}
+// 	return m1;
+// }
 
 int check(double matrixA[N][N], double matrixB[N][N], double matrixC[N][N]){
 	double r[N][1];
@@ -342,7 +342,7 @@ int main(int argc, char *argv[])
 	}
 	if(grid.my_rank != 3)
 	{
-		MPI_Send(&matrixC([0][0]), N*N, MPI_DOUBLE, 3, 0, MPI_COMM_WORLD);
+		MPI_Send(&matrixC[0][0], N*N, MPI_DOUBLE, 3, 0, MPI_COMM_WORLD);
 	}
 	if(grid.my_rank == 3)
 	{
