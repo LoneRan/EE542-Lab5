@@ -23,7 +23,7 @@ typedef struct {
 	int my_rank; /* rank within the grid */
 }GridInfo;
 
-double[][] addMatrix(double m1[N][N], m2[N][N]){
+double[N][N] addMatrix(double m1[N][N], m2[N][N]){
 	for(int i = 0; i < N;  i++){
 		for(int j = 0; j < N; j++){
 			m1[i][j] += m2[i][j];	
@@ -342,13 +342,13 @@ int main(int argc, char *argv[])
 	}
 	if(grid.my_rank != 3)
 	{
-		MPI_Send(&matrixC([0][0]), N*N, MPI_INT, 3, tag, MPI_COMM_WORLD);
+		MPI_Send(&matrixC([0][0]), N*N, MPI_DOUBLE, 3, 0, MPI_COMM_WORLD);
 	}
 	if(grid.my_rank == 3)
 	{
-		MPI_Recv(&temp0([0][0]), N*N, MPI_INT, 0, tag, MPI_COMM_WORLD);
-		MPI_Recv(&temp1([0][0]), N*N, MPI_INT, 1, tag, MPI_COMM_WORLD);
-		MPI_Recv(&temp2([0][0]), N*N, MPI_INT, 2, tag, MPI_COMM_WORLD);
+		MPI_Recv(&temp0([0][0]), N*N, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
+		MPI_Recv(&temp1([0][0]), N*N, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
+		MPI_Recv(&temp2([0][0]), N*N, MPI_DOUBLE, 2, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
 		matrixC = addMatrix(matrixC, temp0);
 		matrixC = addMatrix(matrixC, temp1);
 		matrixC = addMatrix(matrixC, temp2);
