@@ -364,22 +364,42 @@ int main(int argc, char *argv[])
 				matrixC[i][j] += temp2[i][j];	
 			}
 		}
-		
-	}
-	
-	for(i=0;i<N;i++)
-	{
-		for(j=0;j<N;j++)
+		printf("AAAAAAA\n");
+		for(i=0;i<N;i++)
 		{
-			//printf("localC[%d][%d]=%d ", i,j,localC[i][j]);
-			printf("%.2f ", matrixC[i][j]);
+			for(j=0;j<N;j++)
+			{
+				//printf("localC[%d][%d]=%d ", i,j,localC[i][j]);
+				printf("%.2f ", matrixA[i][j]);
+			}
+			printf("\n");
 		}
-		printf("\n");
+		printf("BBBBBBB\n");
+		for(i=0;i<N;i++)
+		{
+			for(j=0;j<N;j++)
+			{
+				//printf("localC[%d][%d]=%d ", i,j,localC[i][j]);
+				printf("%.2f ", matrixB[i][j]);
+			}
+			printf("\n");
+		}
+		for(i=0;i<N;i++)
+		{
+			for(j=0;j<N;j++)
+			{
+				//printf("localC[%d][%d]=%d ", i,j,localC[i][j]);
+				printf("%.2f ", matrixC[i][j]);
+			}
+			printf("\n");
+		}
+
+
+		if(check(matrixA,matrixB,matrixC)==1) printf("result is correct!\n");
+		else printf("result is wrong!\n");
 	}
 	
 	
-	if(check(matrixA,matrixB,matrixC)==1) printf("result is correct!\n");
-	else printf("result is wrong!\n");
 	
 		
 	MPI_Finalize ();
