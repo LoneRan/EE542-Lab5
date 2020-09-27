@@ -349,9 +349,22 @@ int main(int argc, char *argv[])
 		MPI_Recv(&temp0([0][0]), N*N, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
 		MPI_Recv(&temp1([0][0]), N*N, MPI_DOUBLE, 1, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
 		MPI_Recv(&temp2([0][0]), N*N, MPI_DOUBLE, 2, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
-		matrixC = addMatrix(matrixC, temp0);
-		matrixC = addMatrix(matrixC, temp1);
-		matrixC = addMatrix(matrixC, temp2);
+		for(int i = 0; i < N;  i++){
+			for(int j = 0; j < N; j++){
+				matrixC[i][j] += temp0[i][j];	
+			}
+		}
+		for(int i = 0; i < N;  i++){
+			for(int j = 0; j < N; j++){
+				matrixC[i][j] += temp1[i][j];	
+			}
+		}
+		for(int i = 0; i < N;  i++){
+			for(int j = 0; j < N; j++){
+				matrixC[i][j] += temp2[i][j];	
+			}
+		}
+	}
 		
 	}
 	
