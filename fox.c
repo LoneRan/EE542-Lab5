@@ -336,7 +336,7 @@ int main(int argc, char *argv[])
 	for(i=base_row;i<base_row+dim;i++){
 		for(j=base_col;j<base_col+dim;j++)
 		{
-			matrixC[j][i] = localC[i-(base_row)][j-(base_col)];
+			matrixC[i][j] = localC[i-(base_row)][j-(base_col)];
 		}
 	}
 	if(grid.my_rank != 3)
